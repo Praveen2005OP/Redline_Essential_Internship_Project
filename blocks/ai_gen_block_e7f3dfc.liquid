@@ -1,0 +1,548 @@
+{% doc %}
+  @prompt
+    discount on first order to attract customers
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-first-order-discount-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-first-order-discount__container-{{ ai_gen_id }} {
+    position: relative;
+    background: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    padding: {{ block.settings.padding }}px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .ai-first-order-discount__badge-{{ ai_gen_id }} {
+    display: inline-block;
+    background-color: {{ block.settings.badge_color }};
+    color: {{ block.settings.badge_text_color }};
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .ai-first-order-discount__heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .ai-first-order-discount__discount-{{ ai_gen_id }} {
+    font-size: {{ block.settings.discount_size }}px;
+    color: {{ block.settings.discount_color }};
+    font-weight: 800;
+    margin: 16px 0;
+    line-height: 1;
+  }
+
+  .ai-first-order-discount__description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  .ai-first-order-discount__code-wrapper-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .ai-first-order-discount__code-{{ ai_gen_id }} {
+    background-color: {{ block.settings.code_background }};
+    color: {{ block.settings.code_text_color }};
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 2px dashed {{ block.settings.code_border_color }};
+  }
+
+  .ai-first-order-discount__copy-btn-{{ ai_gen_id }} {
+    background-color: {{ block.settings.copy_button_color }};
+    color: {{ block.settings.copy_button_text_color }};
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .ai-first-order-discount__copy-btn-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.copy_button_hover_color }};
+    transform: translateY(-2px);
+  }
+
+  .ai-first-order-discount__cta-{{ ai_gen_id }} {
+    display: inline-block;
+    background-color: {{ block.settings.cta_button_color }};
+    color: {{ block.settings.cta_button_text_color }};
+    padding: 16px 40px;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .ai-first-order-discount__cta-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.cta_button_hover_color }};
+    transform: translateY(-2px);
+  }
+
+  .ai-first-order-discount__terms-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.terms_color }};
+    margin-top: 16px;
+    opacity: 0.8;
+  }
+
+  .ai-first-order-discount__copied-{{ ai_gen_id }} {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #008060;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999;
+  }
+
+  .ai-first-order-discount__copied-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-first-order-discount__heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+
+    .ai-first-order-discount__discount-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.discount_size }}px * 0.7);
+    }
+
+    .ai-first-order-discount__code-wrapper-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ai-first-order-discount__code-{{ ai_gen_id }} {
+      font-size: 16px;
+    }
+  }
+{% endstyle %}
+
+<first-order-discount-{{ ai_gen_id }}
+  class="ai-first-order-discount-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-first-order-discount__container-{{ ai_gen_id }}">
+    {% if block.settings.show_badge %}
+      <div class="ai-first-order-discount__badge-{{ ai_gen_id }}">
+        {{ block.settings.badge_text }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-first-order-discount__heading-{{ ai_gen_id }}">
+        {{ block.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if block.settings.discount_text != blank %}
+      <div class="ai-first-order-discount__discount-{{ ai_gen_id }}">
+        {{ block.settings.discount_text }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.description != blank %}
+      <div class="ai-first-order-discount__description-{{ ai_gen_id }}">
+        {{ block.settings.description }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.discount_code != blank %}
+      <div class="ai-first-order-discount__code-wrapper-{{ ai_gen_id }}">
+        <div class="ai-first-order-discount__code-{{ ai_gen_id }}" data-code="{{ block.settings.discount_code }}">
+          {{ block.settings.discount_code }}
+        </div>
+        <button
+          class="ai-first-order-discount__copy-btn-{{ ai_gen_id }}"
+          data-copy-button
+          aria-label="Copy discount code"
+        >
+          {{ block.settings.copy_button_text }}
+        </button>
+      </div>
+    {% endif %}
+
+    {% if block.settings.cta_button_text != blank and block.settings.cta_button_link != blank %}
+      <a
+        href="{{ block.settings.cta_button_link }}"
+        class="ai-first-order-discount__cta-{{ ai_gen_id }}"
+      >
+        {{ block.settings.cta_button_text }}
+      </a>
+    {% endif %}
+
+    {% if block.settings.terms_text != blank %}
+      <div class="ai-first-order-discount__terms-{{ ai_gen_id }}">
+        {{ block.settings.terms_text }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ai-first-order-discount__copied-{{ ai_gen_id }}" data-copied-message>
+    Code copied!
+  </div>
+</first-order-discount-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FirstOrderDiscount{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.copyButton = this.querySelector('[data-copy-button]');
+        this.codeElement = this.querySelector('.ai-first-order-discount__code-{{ ai_gen_id }}');
+        this.copiedMessage = this.querySelector('[data-copied-message]');
+
+        if (this.copyButton && this.codeElement) {
+          this.copyButton.addEventListener('click', this.handleCopy.bind(this));
+        }
+      }
+
+      handleCopy() {
+        const code = this.codeElement.getAttribute('data-code');
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code).then(() => {
+            this.showCopiedMessage();
+          }).catch(() => {
+            this.fallbackCopy(code);
+          });
+        } else {
+          this.fallbackCopy(code);
+        }
+      }
+
+      fallbackCopy(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        try {
+          document.execCommand('copy');
+          this.showCopiedMessage();
+        } catch (err) {
+          console.error('Failed to copy text');
+        }
+
+        document.body.removeChild(textArea);
+      }
+
+      showCopiedMessage() {
+        this.copiedMessage.classList.add('active');
+
+        setTimeout(() => {
+          this.copiedMessage.classList.remove('active');
+        }, 2000);
+      }
+    }
+
+    customElements.define('first-order-discount-{{ ai_gen_id }}', FirstOrderDiscount{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "First order discount",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "New Customer Offer"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Welcome! Get Your First Order Discount"
+    },
+    {
+      "type": "text",
+      "id": "discount_text",
+      "label": "Discount text",
+      "default": "20% OFF"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Use this code at checkout to save on your first purchase"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount code",
+      "default": "WELCOME20"
+    },
+    {
+      "type": "text",
+      "id": "copy_button_text",
+      "label": "Copy button text",
+      "default": "Copy Code"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_link",
+      "label": "CTA button link"
+    },
+    {
+      "type": "text",
+      "id": "terms_text",
+      "label": "Terms text",
+      "default": "Valid for first-time customers only. Cannot be combined with other offers."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "discount_size",
+      "label": "Discount size",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge background",
+      "default": "#FF0000"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "discount_color",
+      "label": "Discount text",
+      "default": "#FFCC40"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "code_background",
+      "label": "Code background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "code_text_color",
+      "label": "Code text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "code_border_color",
+      "label": "Code border",
+      "default": "#FFCC40"
+    },
+    {
+      "type": "color",
+      "id": "terms_color",
+      "label": "Terms text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Copy button"
+    },
+    {
+      "type": "color",
+      "id": "copy_button_color",
+      "label": "Background",
+      "default": "#FFCC40"
+    },
+    {
+      "type": "color",
+      "id": "copy_button_text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "copy_button_hover_color",
+      "label": "Hover background",
+      "default": "#FFD966"
+    },
+    {
+      "type": "header",
+      "content": "CTA button"
+    },
+    {
+      "type": "color",
+      "id": "cta_button_color",
+      "label": "Background",
+      "default": "#FF0000"
+    },
+    {
+      "type": "color",
+      "id": "cta_button_text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_button_hover_color",
+      "label": "Hover background",
+      "default": "#CC0000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "First order discount"
+    }
+  ]
+}
+{% endschema %}

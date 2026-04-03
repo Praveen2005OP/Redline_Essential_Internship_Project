@@ -1,0 +1,742 @@
+{% doc %}
+  @prompt
+    add the review section where people can see reviews and add there own reviews for the product and every product has there own review they must not be missed up with different products 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-reviews-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: 40px 20px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-product-reviews__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-product-reviews__header-{{ ai_gen_id }} {
+    margin-bottom: 30px;
+  }
+
+  .ai-product-reviews__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 10px;
+  }
+
+  .ai-product-reviews__summary-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .ai-product-reviews__rating-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-product-reviews__stars-{{ ai_gen_id }} {
+    display: flex;
+    gap: 4px;
+  }
+
+  .ai-product-reviews__star-{{ ai_gen_id }} {
+    width: 20px;
+    height: 20px;
+    fill: {{ block.settings.star_color }};
+  }
+
+  .ai-product-reviews__star-{{ ai_gen_id }}.empty {
+    fill: {{ block.settings.star_empty_color }};
+  }
+
+  .ai-product-reviews__average-{{ ai_gen_id }} {
+    font-size: 18px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-product-reviews__count-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.7;
+  }
+
+  .ai-product-reviews__list-{{ ai_gen_id }} {
+    margin-bottom: 40px;
+  }
+
+  .ai-product-reviews__item-{{ ai_gen_id }} {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: {{ block.settings.review_bg_color }};
+    border-radius: {{ block.settings.review_border_radius }}px;
+    border: 1px solid {{ block.settings.review_border_color }};
+  }
+
+  .ai-product-reviews__item-header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .ai-product-reviews__reviewer-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ai-product-reviews__reviewer-name-{{ ai_gen_id }} {
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+    font-size: 16px;
+  }
+
+  .ai-product-reviews__review-date-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.6;
+  }
+
+  .ai-product-reviews__review-stars-{{ ai_gen_id }} {
+    display: flex;
+    gap: 3px;
+  }
+
+  .ai-product-reviews__review-star-{{ ai_gen_id }} {
+    width: 16px;
+    height: 16px;
+    fill: {{ block.settings.star_color }};
+  }
+
+  .ai-product-reviews__review-star-{{ ai_gen_id }}.empty {
+    fill: {{ block.settings.star_empty_color }};
+  }
+
+  .ai-product-reviews__review-text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  .ai-product-reviews__empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 40px 20px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.6;
+  }
+
+  .ai-product-reviews__form-{{ ai_gen_id }} {
+    padding: 30px;
+    background-color: {{ block.settings.form_bg_color }};
+    border-radius: {{ block.settings.form_border_radius }}px;
+    border: 1px solid {{ block.settings.form_border_color }};
+  }
+
+  .ai-product-reviews__form-title-{{ ai_gen_id }} {
+    font-size: 20px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 20px;
+  }
+
+  .ai-product-reviews__form-group-{{ ai_gen_id }} {
+    margin-bottom: 20px;
+  }
+
+  .ai-product-reviews__label-{{ ai_gen_id }} {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: {{ block.settings.text_color }};
+    font-size: 14px;
+  }
+
+  .ai-product-reviews__input-{{ ai_gen_id }},
+  .ai-product-reviews__textarea-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid {{ block.settings.input_border_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    font-size: 14px;
+    background-color: {{ block.settings.input_bg_color }};
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-product-reviews__textarea-{{ ai_gen_id }} {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .ai-product-reviews__rating-input-{{ ai_gen_id }} {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ai-product-reviews__star-button-{{ ai_gen_id }} {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .ai-product-reviews__star-button-{{ ai_gen_id }}:hover {
+    transform: scale(1.1);
+  }
+
+  .ai-product-reviews__star-button-{{ ai_gen_id }} svg {
+    width: 28px;
+    height: 28px;
+    fill: {{ block.settings.star_empty_color }};
+    transition: fill 0.2s ease;
+  }
+
+  .ai-product-reviews__star-button-{{ ai_gen_id }}.selected svg {
+    fill: {{ block.settings.star_color }};
+  }
+
+  .ai-product-reviews__submit-{{ ai_gen_id }} {
+    padding: 14px 32px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-product-reviews__submit-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+  }
+
+  .ai-product-reviews__message-{{ ai_gen_id }} {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .ai-product-reviews__message-{{ ai_gen_id }}.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .ai-product-reviews__message-{{ ai_gen_id }}.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-reviews-{{ ai_gen_id }} {
+      padding: 30px 15px;
+    }
+
+    .ai-product-reviews__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.8 }}px;
+    }
+
+    .ai-product-reviews__summary-{{ ai_gen_id }} {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .ai-product-reviews__form-{{ ai_gen_id }} {
+      padding: 20px;
+    }
+  }
+{% endstyle %}
+
+<product-reviews-{{ ai_gen_id }}
+  class="ai-product-reviews-{{ ai_gen_id }}"
+  data-product-id="{{ product.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-product-reviews__container-{{ ai_gen_id }}">
+    <div class="ai-product-reviews__header-{{ ai_gen_id }}">
+      <h2 class="ai-product-reviews__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+      
+      <div class="ai-product-reviews__summary-{{ ai_gen_id }}">
+        <div class="ai-product-reviews__rating-{{ ai_gen_id }}">
+          <div class="ai-product-reviews__stars-{{ ai_gen_id }}" data-average-rating></div>
+          <span class="ai-product-reviews__average-{{ ai_gen_id }}" data-average-text>0.0</span>
+        </div>
+        <span class="ai-product-reviews__count-{{ ai_gen_id }}" data-review-count>0 reviews</span>
+      </div>
+    </div>
+
+    <div class="ai-product-reviews__list-{{ ai_gen_id }}" data-reviews-list>
+      <div class="ai-product-reviews__empty-{{ ai_gen_id }}">
+        {{ block.settings.empty_message }}
+      </div>
+    </div>
+
+    <div class="ai-product-reviews__form-{{ ai_gen_id }}">
+      <h3 class="ai-product-reviews__form-title-{{ ai_gen_id }}">{{ block.settings.form_title }}</h3>
+      
+      <div class="ai-product-reviews__message-{{ ai_gen_id }}" data-form-message style="display: none;"></div>
+
+      <form data-review-form>
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        
+        <div class="ai-product-reviews__form-group-{{ ai_gen_id }}">
+          <label class="ai-product-reviews__label-{{ ai_gen_id }}" for="reviewer-name-{{ ai_gen_id }}">
+            {{ block.settings.name_label }}
+          </label>
+          <input
+            type="text"
+            id="reviewer-name-{{ ai_gen_id }}"
+            name="reviewer_name"
+            class="ai-product-reviews__input-{{ ai_gen_id }}"
+            required
+          >
+        </div>
+
+        <div class="ai-product-reviews__form-group-{{ ai_gen_id }}">
+          <label class="ai-product-reviews__label-{{ ai_gen_id }}">
+            {{ block.settings.rating_label }}
+          </label>
+          <div class="ai-product-reviews__rating-input-{{ ai_gen_id }}" data-rating-input>
+            {% for i in (1..5) %}
+              <button
+                type="button"
+                class="ai-product-reviews__star-button-{{ ai_gen_id }}"
+                data-rating="{{ i }}"
+                aria-label="Rate {{ i }} stars"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </button>
+            {% endfor %}
+          </div>
+          <input type="hidden" name="rating" data-rating-value required>
+        </div>
+
+        <div class="ai-product-reviews__form-group-{{ ai_gen_id }}">
+          <label class="ai-product-reviews__label-{{ ai_gen_id }}" for="review-text-{{ ai_gen_id }}">
+            {{ block.settings.review_label }}
+          </label>
+          <textarea
+            id="review-text-{{ ai_gen_id }}"
+            name="review_text"
+            class="ai-product-reviews__textarea-{{ ai_gen_id }}"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="ai-product-reviews__submit-{{ ai_gen_id }}">
+          {{ block.settings.submit_button_text }}
+        </button>
+      </form>
+    </div>
+  </div>
+</product-reviews-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductReviews{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.productId = this.dataset.productId;
+        this.storageKey = `product_reviews_${this.productId}`;
+        this.reviews = this.loadReviews();
+      }
+
+      connectedCallback() {
+        this.form = this.querySelector('[data-review-form]');
+        this.reviewsList = this.querySelector('[data-reviews-list]');
+        this.ratingInput = this.querySelector('[data-rating-input]');
+        this.ratingValue = this.querySelector('[data-rating-value]');
+        this.formMessage = this.querySelector('[data-form-message]');
+        this.averageRating = this.querySelector('[data-average-rating]');
+        this.averageText = this.querySelector('[data-average-text]');
+        this.reviewCount = this.querySelector('[data-review-count]');
+
+        this.setupEventListeners();
+        this.renderReviews();
+        this.updateSummary();
+      }
+
+      setupEventListeners() {
+        this.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.handleSubmit();
+        });
+
+        this.ratingInput.querySelectorAll('.ai-product-reviews__star-button-{{ ai_gen_id }}').forEach((button) => {
+          button.addEventListener('click', () => {
+            const rating = parseInt(button.dataset.rating);
+            this.setRating(rating);
+          });
+        });
+      }
+
+      setRating(rating) {
+        this.ratingValue.value = rating;
+        const buttons = this.ratingInput.querySelectorAll('.ai-product-reviews__star-button-{{ ai_gen_id }}');
+        buttons.forEach((button, index) => {
+          if (index < rating) {
+            button.classList.add('selected');
+          } else {
+            button.classList.remove('selected');
+          }
+        });
+      }
+
+      handleSubmit() {
+        const formData = new FormData(this.form);
+        const review = {
+          id: Date.now(),
+          productId: this.productId,
+          reviewerName: formData.get('reviewer_name'),
+          rating: parseInt(formData.get('rating')),
+          reviewText: formData.get('review_text'),
+          date: new Date().toISOString()
+        };
+
+        if (!review.rating) {
+          this.showMessage('Please select a rating', 'error');
+          return;
+        }
+
+        this.reviews.unshift(review);
+        this.saveReviews();
+        this.renderReviews();
+        this.updateSummary();
+        this.form.reset();
+        this.setRating(0);
+        this.showMessage('{{ block.settings.success_message }}', 'success');
+      }
+
+      renderReviews() {
+        if (this.reviews.length === 0) {
+          this.reviewsList.innerHTML = '<div class="ai-product-reviews__empty-{{ ai_gen_id }}">{{ block.settings.empty_message }}</div>';
+          return;
+        }
+
+        this.reviewsList.innerHTML = this.reviews.map(review => `
+          <div class="ai-product-reviews__item-{{ ai_gen_id }}">
+            <div class="ai-product-reviews__item-header-{{ ai_gen_id }}">
+              <div class="ai-product-reviews__reviewer-{{ ai_gen_id }}">
+                <div class="ai-product-reviews__reviewer-name-{{ ai_gen_id }}">${this.escapeHtml(review.reviewerName)}</div>
+                <div class="ai-product-reviews__review-date-{{ ai_gen_id }}">${this.formatDate(review.date)}</div>
+              </div>
+              <div class="ai-product-reviews__review-stars-{{ ai_gen_id }}">
+                ${this.renderStars(review.rating, 'ai-product-reviews__review-star-{{ ai_gen_id }}')}
+              </div>
+            </div>
+            <div class="ai-product-reviews__review-text-{{ ai_gen_id }}">${this.escapeHtml(review.reviewText)}</div>
+          </div>
+        `).join('');
+      }
+
+      updateSummary() {
+        if (this.reviews.length === 0) {
+          this.averageRating.innerHTML = this.renderStars(0, 'ai-product-reviews__star-{{ ai_gen_id }}');
+          this.averageText.textContent = '0.0';
+          this.reviewCount.textContent = '0 reviews';
+          return;
+        }
+
+        const average = this.reviews.reduce((sum, review) => sum + review.rating, 0) / this.reviews.length;
+        const roundedAverage = Math.round(average * 10) / 10;
+        
+        this.averageRating.innerHTML = this.renderStars(Math.round(average), 'ai-product-reviews__star-{{ ai_gen_id }}');
+        this.averageText.textContent = roundedAverage.toFixed(1);
+        this.reviewCount.textContent = `${this.reviews.length} ${this.reviews.length === 1 ? 'review' : 'reviews'}`;
+      }
+
+      renderStars(rating, className) {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+          const filled = i <= rating;
+          stars += `
+            <svg class="${className} ${filled ? '' : 'empty'}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          `;
+        }
+        return stars;
+      }
+
+      formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      showMessage(message, type) {
+        this.formMessage.textContent = message;
+        this.formMessage.className = `ai-product-reviews__message-{{ ai_gen_id }} ${type}`;
+        this.formMessage.style.display = 'block';
+        setTimeout(() => {
+          this.formMessage.style.display = 'none';
+        }, 5000);
+      }
+
+      loadReviews() {
+        try {
+          const stored = localStorage.getItem(this.storageKey);
+          return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      saveReviews() {
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.reviews));
+        } catch (e) {
+          console.error('Failed to save reviews');
+        }
+      }
+    }
+
+    customElements.define('product-reviews-{{ ai_gen_id }}', ProductReviews{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Customer reviews"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "inline_richtext",
+      "id": "empty_message",
+      "label": "Empty state message",
+      "default": "No reviews yet. Be the first to review this product!"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Review form"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "form_title",
+      "label": "Form title",
+      "default": "Write a review"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "name_label",
+      "label": "Name field label",
+      "default": "Your name"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "rating_label",
+      "label": "Rating field label",
+      "default": "Your rating"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "review_label",
+      "label": "Review field label",
+      "default": "Your review"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "submit_button_text",
+      "label": "Submit button text",
+      "default": "Submit review"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you for your review!"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star filled",
+      "default": "#ffc107"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Star empty",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "review_bg_color",
+      "label": "Review background",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "review_border_color",
+      "label": "Review border",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "form_bg_color",
+      "label": "Form background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "form_border_color",
+      "label": "Form border",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "input_bg_color",
+      "label": "Input background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input border",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Container border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "review_border_radius",
+      "label": "Review border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "form_border_radius",
+      "label": "Form border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "label": "Input border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product reviews"
+    }
+  ]
+}
+{% endschema %}

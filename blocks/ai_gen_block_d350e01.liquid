@@ -1,0 +1,681 @@
+{% doc %}
+  @prompt
+    <div style="background-color: #000000; padding: 60px 20px; text-align: center; font-family: sans-serif;">
+      
+      <h2 style="color: #ffffff; font-size: 36px; font-weight: bold; margin-bottom: 60px; letter-spacing: 1px;">The Redline Standard</h2>
+      
+      <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;">
+        
+        <div style="flex: 1; min-width: 250px; max-width: 350px; display: flex; flex-direction: column; align-items: center;">
+          <div style="margin-bottom: 25px; color: #ffffff;">
+            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h3 style="color: #ffffff; font-size: 18px; font-weight: 600; margin-bottom: 15px; letter-spacing: 0.5px;">Premium Quality</h3>
+          <p style="color: #a3a3a3; font-size: 15px; line-height: 1.6; margin: 0;">Genuine, high-performance components engineered for perfect fitment and aggressive styling.</p>
+        </div>
+    
+        <div style="flex: 1; min-width: 250px; max-width: 350px; display: flex; flex-direction: column; align-items: center;">
+          <div style="margin-bottom: 25px; color: #ffffff;">
+            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          </div>
+          <h3 style="color: #ffffff; font-size: 18px; font-weight: 600; margin-bottom: 15px; letter-spacing: 0.5px;">Fast & Secure Shipping</h3>
+          <p style="color: #a3a3a3; font-size: 15px; line-height: 1.6; margin: 0;">Tracked, insured delivery on all orders to ensure your upgrades arrive safely and on time.</p>
+        </div>
+    
+        <div style="flex: 1; min-width: 250px; max-width: 350px; display: flex; flex-direction: column; align-items: center;">
+          <div style="margin-bottom: 25px; color: #ffffff;">
+            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3 style="color: #ffffff; font-size: 18px; font-weight: 600; margin-bottom: 15px; letter-spacing: 0.5px;">Secure Checkout</h3>
+          <p style="color: #a3a3a3; font-size: 15px; line-height: 1.6; margin: 0;">Shop with absolute confidence using our 100% encrypted payment gateway and 30-day return policy.</p>
+        </div>
+    
+      </div>
+    </div>
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-features-section-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px;
+    text-align: center;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-features-heading-{{ ai_gen_id }} {
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: 700;
+    margin: 0 0 {{ block.settings.heading_spacing }}px;
+    letter-spacing: 1px;
+  }
+
+  .ai-features-grid-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    gap: {{ block.settings.grid_gap }}px;
+    flex-wrap: wrap;
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-feature-item-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: {{ block.settings.item_min_width }}px;
+    max-width: {{ block.settings.item_max_width }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ai-feature-icon-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.icon_spacing }}px;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ai-feature-icon-{{ ai_gen_id }} svg {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    stroke-width: {{ block.settings.icon_stroke_width }};
+  }
+
+  .ai-feature-title-{{ ai_gen_id }} {
+    color: {{ block.settings.title_color }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    margin: 0 0 {{ block.settings.title_spacing }}px;
+    letter-spacing: 0.5px;
+  }
+
+  .ai-feature-description-{{ ai_gen_id }} {
+    color: {{ block.settings.description_color }};
+    font-size: {{ block.settings.description_size }}px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-features-section-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_top | times: 0.6 }}px {{ block.settings.padding_horizontal | times: 0.5 }}px {{ block.settings.padding_bottom | times: 0.6 }}px;
+    }
+
+    .ai-features-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+      margin-bottom: {{ block.settings.heading_spacing | times: 0.7 }}px;
+    }
+
+    .ai-features-grid-{{ ai_gen_id }} {
+      gap: {{ block.settings.grid_gap | times: 0.7 }}px;
+    }
+
+    .ai-feature-item-{{ ai_gen_id }} {
+      min-width: 100%;
+    }
+
+    .ai-feature-icon-{{ ai_gen_id }} svg {
+      width: {{ block.settings.icon_size | times: 0.8 }}px;
+      height: {{ block.settings.icon_size | times: 0.8 }}px;
+    }
+
+    .ai-feature-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.9 }}px;
+    }
+
+    .ai-feature-description-{{ ai_gen_id }} {
+      font-size: {{ block.settings.description_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<redline-features-{{ ai_gen_id }} class="ai-features-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.heading != blank %}
+    <h2 class="ai-features-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+  {% endif %}
+
+  <div class="ai-features-grid-{{ ai_gen_id }}">
+    {% if block.settings.feature_1_enabled %}
+      <div class="ai-feature-item-{{ ai_gen_id }}">
+        <div class="ai-feature-icon-{{ ai_gen_id }}">
+          {% if block.settings.feature_1_icon == 'star' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          {% elsif block.settings.feature_1_icon == 'truck' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          {% elsif block.settings.feature_1_icon == 'shield' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          {% elsif block.settings.feature_1_icon == 'check' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          {% elsif block.settings.feature_1_icon == 'award' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+          {% elsif block.settings.feature_1_icon == 'package' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          {% endif %}
+        </div>
+        <h3 class="ai-feature-title-{{ ai_gen_id }}">{{ block.settings.feature_1_title }}</h3>
+        <p class="ai-feature-description-{{ ai_gen_id }}">{{ block.settings.feature_1_description }}</p>
+      </div>
+    {% endif %}
+
+    {% if block.settings.feature_2_enabled %}
+      <div class="ai-feature-item-{{ ai_gen_id }}">
+        <div class="ai-feature-icon-{{ ai_gen_id }}">
+          {% if block.settings.feature_2_icon == 'star' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          {% elsif block.settings.feature_2_icon == 'truck' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          {% elsif block.settings.feature_2_icon == 'shield' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          {% elsif block.settings.feature_2_icon == 'check' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          {% elsif block.settings.feature_2_icon == 'award' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+          {% elsif block.settings.feature_2_icon == 'package' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          {% endif %}
+        </div>
+        <h3 class="ai-feature-title-{{ ai_gen_id }}">{{ block.settings.feature_2_title }}</h3>
+        <p class="ai-feature-description-{{ ai_gen_id }}">{{ block.settings.feature_2_description }}</p>
+      </div>
+    {% endif %}
+
+    {% if block.settings.feature_3_enabled %}
+      <div class="ai-feature-item-{{ ai_gen_id }}">
+        <div class="ai-feature-icon-{{ ai_gen_id }}">
+          {% if block.settings.feature_3_icon == 'star' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          {% elsif block.settings.feature_3_icon == 'truck' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          {% elsif block.settings.feature_3_icon == 'shield' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          {% elsif block.settings.feature_3_icon == 'check' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          {% elsif block.settings.feature_3_icon == 'award' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+          {% elsif block.settings.feature_3_icon == 'package' %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          {% endif %}
+        </div>
+        <h3 class="ai-feature-title-{{ ai_gen_id }}">{{ block.settings.feature_3_title }}</h3>
+        <p class="ai-feature-description-{{ ai_gen_id }}">{{ block.settings.feature_3_description }}</p>
+      </div>
+    {% endif %}
+  </div>
+</redline-features-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class RedlineFeatures{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.style.display = 'block';
+      }
+    }
+
+    customElements.define('redline-features-{{ ai_gen_id }}', RedlineFeatures{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Features section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Redline Standard"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content max width",
+      "min": 800,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Padding horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Heading style"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "label": "Bottom spacing",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Grid layout"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Gap between items",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "item_min_width",
+      "label": "Item minimum width",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "item_max_width",
+      "label": "Item maximum width",
+      "min": 250,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 350
+    },
+    {
+      "type": "header",
+      "content": "Icon style"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Size",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "icon_stroke_width",
+      "label": "Stroke width",
+      "min": 1,
+      "max": 3,
+      "step": 0.5,
+      "default": 1.5
+    },
+    {
+      "type": "range",
+      "id": "icon_spacing",
+      "label": "Bottom spacing",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Title style"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Bottom spacing",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Description style"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color",
+      "default": "#a3a3a3"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Feature 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_1_enabled",
+      "label": "Enable feature 1",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "feature_1_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "truck",
+          "label": "Truck"
+        },
+        {
+          "value": "shield",
+          "label": "Shield"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "award",
+          "label": "Award"
+        },
+        {
+          "value": "package",
+          "label": "Package"
+        }
+      ],
+      "default": "star"
+    },
+    {
+      "type": "text",
+      "id": "feature_1_title",
+      "label": "Title",
+      "default": "Premium Quality"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_1_description",
+      "label": "Description",
+      "default": "Genuine, high-performance components engineered for perfect fitment and aggressive styling."
+    },
+    {
+      "type": "header",
+      "content": "Feature 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_2_enabled",
+      "label": "Enable feature 2",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "feature_2_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "truck",
+          "label": "Truck"
+        },
+        {
+          "value": "shield",
+          "label": "Shield"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "award",
+          "label": "Award"
+        },
+        {
+          "value": "package",
+          "label": "Package"
+        }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "text",
+      "id": "feature_2_title",
+      "label": "Title",
+      "default": "Fast & Secure Shipping"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_2_description",
+      "label": "Description",
+      "default": "Tracked, insured delivery on all orders to ensure your upgrades arrive safely and on time."
+    },
+    {
+      "type": "header",
+      "content": "Feature 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_3_enabled",
+      "label": "Enable feature 3",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "feature_3_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "truck",
+          "label": "Truck"
+        },
+        {
+          "value": "shield",
+          "label": "Shield"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "award",
+          "label": "Award"
+        },
+        {
+          "value": "package",
+          "label": "Package"
+        }
+      ],
+      "default": "shield"
+    },
+    {
+      "type": "text",
+      "id": "feature_3_title",
+      "label": "Title",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_3_description",
+      "label": "Description",
+      "default": "Shop with absolute confidence using our 100% encrypted payment gateway and 30-day return policy."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features section"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,567 @@
+{% doc %}
+  @prompt
+    Create a custom footer section that displays three columns side by side on desktop: 1) "Quick Links" menu column with links (Search, Home, About Us), 2) "Customer Support" menu column with links (Privacy and Policies, Return & Refund, Shipping Policy), and 3) "Stay in the Loop" newsletter signup column with a heading, a short description, an email input and subscribe button. For the newsletter form, use {% form 'contact' %} with input name="contact[email]" and a hidden input contact[tags] set to "newsletter". The footer should have a dark/black background with white text. Do NOT use any custom or invalid form types.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-footer-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+    width: 100%;
+  }
+
+  .ai-footer-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-footer-columns-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .ai-footer-column-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-footer-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-footer-menu-{{ ai_gen_id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-footer-menu-item-{{ ai_gen_id }} {
+    margin: 0;
+  }
+
+  .ai-footer-menu-link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.link_size }}px;
+    transition: color 0.3s ease;
+  }
+
+  .ai-footer-menu-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  .ai-footer-newsletter-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-footer-newsletter-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    margin: 0 0 20px;
+    line-height: 1.5;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-footer-newsletter-form-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-footer-newsletter-input-{{ ai_gen_id }} {
+    padding: 12px 16px;
+    border: 1px solid {{ block.settings.input_border_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    background-color: {{ block.settings.input_background_color }};
+    color: {{ block.settings.input_text_color }};
+    font-size: 14px;
+  }
+
+  .ai-footer-newsletter-input-{{ ai_gen_id }}::placeholder {
+    color: {{ block.settings.input_placeholder_color }};
+  }
+
+  .ai-footer-newsletter-button-{{ ai_gen_id }} {
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-footer-newsletter-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background_color }};
+  }
+
+  .ai-footer-newsletter-message-{{ ai_gen_id }} {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .ai-footer-newsletter-success-{{ ai_gen_id }} {
+    color: {{ block.settings.success_color }};
+  }
+
+  .ai-footer-newsletter-error-{{ ai_gen_id }} {
+    color: {{ block.settings.error_color }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-footer-columns-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+{% endstyle %}
+
+<footer-custom-{{ ai_gen_id }} class="ai-footer-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-footer-container-{{ ai_gen_id }}">
+    <div class="ai-footer-columns-{{ ai_gen_id }}">
+      <div class="ai-footer-column-{{ ai_gen_id }}">
+        <h3 class="ai-footer-heading-{{ ai_gen_id }}">{{ block.settings.column_1_heading }}</h3>
+        <ul class="ai-footer-menu-{{ ai_gen_id }}">
+          {% if block.settings.column_1_link_1_text != blank %}
+            <li class="ai-footer-menu-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.column_1_link_1_url }}" class="ai-footer-menu-link-{{ ai_gen_id }}">
+                {{ block.settings.column_1_link_1_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if block.settings.column_1_link_2_text != blank %}
+            <li class="ai-footer-menu-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.column_1_link_2_url }}" class="ai-footer-menu-link-{{ ai_gen_id }}">
+                {{ block.settings.column_1_link_2_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if block.settings.column_1_link_3_text != blank %}
+            <li class="ai-footer-menu-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.column_1_link_3_url }}" class="ai-footer-menu-link-{{ ai_gen_id }}">
+                {{ block.settings.column_1_link_3_text }}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="ai-footer-column-{{ ai_gen_id }}">
+        <h3 class="ai-footer-heading-{{ ai_gen_id }}">{{ block.settings.column_2_heading }}</h3>
+        <ul class="ai-footer-menu-{{ ai_gen_id }}">
+          {% if block.settings.column_2_link_1_text != blank %}
+            <li class="ai-footer-menu-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.column_2_link_1_url }}" class="ai-footer-menu-link-{{ ai_gen_id }}">
+                {{ block.settings.column_2_link_1_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if block.settings.column_2_link_2_text != blank %}
+            <li class="ai-footer-menu-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.column_2_link_2_url }}" class="ai-footer-menu-link-{{ ai_gen_id }}">
+                {{ block.settings.column_2_link_2_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if block.settings.column_2_link_3_text != blank %}
+            <li class="ai-footer-menu-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.column_2_link_3_url }}" class="ai-footer-menu-link-{{ ai_gen_id }}">
+                {{ block.settings.column_2_link_3_text }}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="ai-footer-column-{{ ai_gen_id }}">
+        <div class="ai-footer-newsletter-{{ ai_gen_id }}">
+          <h3 class="ai-footer-heading-{{ ai_gen_id }}">{{ block.settings.newsletter_heading }}</h3>
+          <p class="ai-footer-newsletter-description-{{ ai_gen_id }}">{{ block.settings.newsletter_description }}</p>
+          
+          {%- form 'contact' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="ai-footer-newsletter-form-{{ ai_gen_id }}">
+              <input
+                type="email"
+                name="contact[email]"
+                class="ai-footer-newsletter-input-{{ ai_gen_id }}"
+                value="{{ form.email }}"
+                placeholder="{{ block.settings.email_placeholder }}"
+                aria-required="true"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                {% if form.errors %}
+                  aria-invalid="true"
+                  aria-describedby="ai-footer-newsletter-error-{{ ai_gen_id }}"
+                {% endif %}
+                {% if form.posted_successfully? %}
+                  aria-describedby="ai-footer-newsletter-success-{{ ai_gen_id }}"
+                {% endif %}
+                required
+              >
+              <button type="submit" class="ai-footer-newsletter-button-{{ ai_gen_id }}">
+                {{ block.settings.button_text }}
+              </button>
+              
+              {%- if form.errors -%}
+                <div
+                  id="ai-footer-newsletter-error-{{ ai_gen_id }}"
+                  class="ai-footer-newsletter-message-{{ ai_gen_id }} ai-footer-newsletter-error-{{ ai_gen_id }}"
+                >
+                  {{ form.errors.messages.email }}
+                </div>
+              {%- endif -%}
+              
+              {%- if form.posted_successfully? -%}
+                <div
+                  id="ai-footer-newsletter-success-{{ ai_gen_id }}"
+                  class="ai-footer-newsletter-message-{{ ai_gen_id }} ai-footer-newsletter-success-{{ ai_gen_id }}"
+                >
+                  {{ block.settings.success_message }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer-custom-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FooterCustom{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.style.display = 'block';
+      }
+    }
+
+    customElements.define('footer-custom-{{ ai_gen_id }}', FooterCustom{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom footer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover",
+      "default": "#cccccc"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 14,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "Link size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Column 1 - Quick links"
+    },
+    {
+      "type": "text",
+      "id": "column_1_heading",
+      "label": "Heading",
+      "default": "Quick Links"
+    },
+    {
+      "type": "text",
+      "id": "column_1_link_1_text",
+      "label": "Link 1 text",
+      "default": "Search"
+    },
+    {
+      "type": "url",
+      "id": "column_1_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "column_1_link_2_text",
+      "label": "Link 2 text",
+      "default": "Home"
+    },
+    {
+      "type": "url",
+      "id": "column_1_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "column_1_link_3_text",
+      "label": "Link 3 text",
+      "default": "About Us"
+    },
+    {
+      "type": "url",
+      "id": "column_1_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "header",
+      "content": "Column 2 - Customer support"
+    },
+    {
+      "type": "text",
+      "id": "column_2_heading",
+      "label": "Heading",
+      "default": "Customer Support"
+    },
+    {
+      "type": "text",
+      "id": "column_2_link_1_text",
+      "label": "Link 1 text",
+      "default": "Privacy and Policies"
+    },
+    {
+      "type": "url",
+      "id": "column_2_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "column_2_link_2_text",
+      "label": "Link 2 text",
+      "default": "Return & Refund"
+    },
+    {
+      "type": "url",
+      "id": "column_2_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "column_2_link_3_text",
+      "label": "Link 3 text",
+      "default": "Shipping Policy"
+    },
+    {
+      "type": "url",
+      "id": "column_2_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "header",
+      "content": "Column 3 - Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Heading",
+      "default": "Stay in the Loop"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_description",
+      "label": "Description",
+      "default": "Subscribe to our newsletter for the latest updates and exclusive offers."
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for subscribing!"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter form style"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "Input background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "Input text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input border",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "input_placeholder_color",
+      "label": "Input placeholder",
+      "default": "#999999"
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "label": "Input border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Button hover background",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "success_color",
+      "label": "Success message",
+      "default": "#4caf50"
+    },
+    {
+      "type": "color",
+      "id": "error_color",
+      "label": "Error message",
+      "default": "#f44336"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom footer"
+    }
+  ]
+}
+{% endschema %}
