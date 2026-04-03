@@ -52,4 +52,3 @@ This repository contains the exported theme code for Redline Essentials. To depl
 
 ---
 *Conceptualized, Designed, and Developed by [Praveen Kumar Sharma]*
-*Contact:* [sharmaji22042005@gmail.com](mailto:sharmaji22042005@gmail.com)
