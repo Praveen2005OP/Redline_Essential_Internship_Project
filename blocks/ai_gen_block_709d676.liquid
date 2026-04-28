@@ -423,7 +423,7 @@
         
         const isOnSale = comparePrice && parseFloat(comparePrice) > parseFloat(price);
         const hasComparePrice = this.showComparePrice && isOnSale;
-        const isAvailable = variant ? variant.available : false;
+        const isAvailable = variant ? (variant.available !== false) : true;
         
         let imageUrl = null;
         if (product.images && product.images.length > 0) {
@@ -554,9 +554,13 @@
       formatMoney(amount) {
         if (amount === null || amount === undefined || amount === '') return '';
         const numAmount = parseFloat(amount);
-        return new Intl.NumberFormat('en-IN', {
+
+        const currency = window.Shopify?.currency?.active || 'USD';
+        const locale = window.Shopify?.locale || 'en-US';
+
+        return new Intl.NumberFormat(locale, {
           style: 'currency',
-          currency: 'INR',
+          currency: currency,
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
         }).format(numAmount);
