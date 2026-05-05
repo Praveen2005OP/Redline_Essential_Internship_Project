@@ -5,6 +5,7 @@
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](#)
 
 **Live Store:** [Visit Redline Essentials](https://redline-essentials.myshopify.com/)
+Website 🔑 Passwaord :**Test@123**
 
 ## 📖 Project Overview
 Redline Essentials is a high-performance, premium automotive parts e-commerce store. This project serves as a comprehensive showcase of modern e-commerce web design, frontend development, and Shopify theme customization. 
